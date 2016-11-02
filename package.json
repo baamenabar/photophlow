@@ -1,0 +1,29 @@
+{
+  "name": "photophlow",
+  "version": "0.1.0",
+  "description": "Photography associated collection of tasks, specially for dealing with a bunch of tasks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baamenabar/photophlow.git"
+  },
+  "keywords": [
+    "files",
+    "fiesystem",
+    "photography",
+    "tasks"
+  ],
+  "author": "B. Agustin Amenabar L.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/baamenabar/photophlow/issues"
+  },
+  "homepage": "https://github.com/baamenabar/photophlow#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
