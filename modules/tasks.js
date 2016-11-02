@@ -1,7 +1,8 @@
 let lists = require('./list.js');
 const path = require('path');
 
-const _filterHay = (haystack, needels) => {
+const _filterBasenameHay = (haystack, needels) => {
+	//console.log('haystack:',haystack, 'needels:', needels);
 	let needelExt =   needels[0].split('.').pop();
 	let haystackExt = haystack[0].split('.').pop();
 	let baseNeedels =  needels.map(item => ({ base:path.basename(item,  '.' + needelExt), path:item}) );
@@ -22,21 +23,8 @@ const _listBaseOrphans = (parents, children, cb) => {
 	var parentsFiles = [];
 	var childrenFiles = [];
 
-	let parentsList = new Promise ((resolve, reject) => {
-		lists.listMatching(parents, resolve, reject);
-	})
-	.then((value) => {
-		parentsFiles = value;
-		return new Promise ((resolve, reject) => {
-			lists.listMatching(children, resolve, reject);
-		});
-	})
-	.then((value) => {
-		orphanFiles = _filterHay(value, parentsFiles);
-		console.log(orphanFiles);
-	})
-	.catch((err) => {
-		console.log('Promise error', err)
+	lists.listTwoMatching(parents, children, (parentList, childrenList) => {
+		console.log(_filterBasenameHay(childrenList, parentList));
 	});
 
 	//cb (orphanFiles);
