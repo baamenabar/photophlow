@@ -1,34 +1,7 @@
-let lists = require('./list.js');
+const lists = require('./list.js');
+const shortcuts = require('./shortcuts.js');
 const path = require('path');
-
-const _filterBasenameHay = (haystack, needels) => {
-	//console.log('haystack:',haystack, 'needels:', needels);
-	let needelExt =   needels[0].split('.').pop();
-	let haystackExt = haystack[0].split('.').pop();
-	let baseNeedels =  needels.map(item => ({ base:path.basename(item,  '.' + needelExt), path:item}) );
-	let baseHaystack = haystack.map(item => ({ base:path.basename(item, '.' + haystackExt), path:item}) );
-	return baseHaystack.filter(item => {
-		return 'undefined' === typeof baseNeedels.find(ele => ele.base === item.base);
-	}).map(item => item.path);
-}
-
-/**
- * Compares all the matching @children to @parent globs and lists the files without a match in @parent
- * @param  {string}   parents  Glob pattern 
- * @param  {string}   children Glob pattern
- * @param  {function} cb  Callback that will have an Array of Orphan files.
- */
-const _listBaseOrphans = (parents, children, cb) => {
-	let orphanFiles = [];
-	var parentsFiles = [];
-	var childrenFiles = [];
-
-	lists.listTwoMatching(parents, children, (parentList, childrenList) => {
-		console.log(_filterBasenameHay(childrenList, parentList));
-	});
-
-	//cb (orphanFiles);
-};
+const fs = require('fs');
 
 var Tasks = (() => {
 
@@ -41,7 +14,15 @@ var Tasks = (() => {
 	};
 
 	const taskIndex = {
-		orphans: _listBaseOrphans
+		orphans: lists.listBaseOrphans,
+		// same baseName
+		sameBN: lists.listSameBaseName,
+		// move same basename to :
+		moveSameBNto: lists.moveSameBaseNameTo,
+		// moveSameBNto shortcut for photoprocessing (selectedJpgRaw2HD)
+		cleanraw: shortcuts.cleanRaw,
+		// separates raw files and puts them in the RAW sub-folder.
+		separateraw: shortcuts.separateRaw
 	};
 
 	return {
