@@ -3,13 +3,13 @@ const glob = require('glob');
 const fs = require('fs');
 
 const Shortcuts = (() => {
-	let formats = ['dng','nef','cr2'];
+	let formats = ['dng','nef','cr2', 'DNG','NEF','CR2'];
 
 	const _moveExistingJpgNamesFromRawToHD = () => {
 		formats.forEach((format, index) => {
 			let currentFormat = './RAW/*.' + format;
 			if(glob.sync(currentFormat).length) {
-				lists.moveSameBaseNameTo('./*.jpg', currentFormat, './HD', () => {
+				lists.moveSameBaseNameTo('./@(*.jpg|*.JPG)', currentFormat, './HD', () => {
 					console.log('done with: ' + format);
 				})
 			} else {
@@ -41,9 +41,9 @@ const Shortcuts = (() => {
 
 	const _moveRawToRawFolder = () => {
 		_setupBasicFolderStructure();
-		let globPattern = '@(*.' + formats.join('|*.') + ')';
+		let globPattern = '@(*.' + formats.join('|*.'). + ')';
 		//console.log('globPattern:', globPattern);
-		glob(globPattern, (err, fileList) => {
+		glob(globPattern, {nocase:true}, (err, fileList) => {
 				if (err) {
 					console.error('A glob error', err)
 					return;
