@@ -1,8 +1,8 @@
 {
   "name": "photophlow",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Photography associated collection of tasks, specially for dealing with a bunch of images.",
-  "main" : "index.js",
+  "main": "index.js",
   "preferGlobal": "true",
   "bin": {
     "photophlow": "index.js"
@@ -26,7 +26,8 @@
     "url": "https://github.com/baamenabar/photophlow/issues"
   },
   "homepage": "https://github.com/baamenabar/photophlow#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "glob": "^7.1.1"
   }
 }
