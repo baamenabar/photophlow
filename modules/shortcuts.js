@@ -41,7 +41,7 @@ const Shortcuts = (() => {
 
 	const _moveRawToRawFolder = () => {
 		_setupBasicFolderStructure();
-		let globPattern = '@(*.' + formats.join('|*.'). + ')';
+		let globPattern = '@(*.' + formats.join('|*.') + ')';
 		//console.log('globPattern:', globPattern);
 		glob(globPattern, {nocase:true}, (err, fileList) => {
 				if (err) {
