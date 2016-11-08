@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Check that the minimal node version is met.
 // this does not work because "let" throws syntax error in older versions. 
 $minimalNodeMayorVersion = 6;
