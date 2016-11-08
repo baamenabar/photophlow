@@ -2,7 +2,8 @@
   "name": "photophlow",
   "version": "0.1.1",
   "description": "Photography associated collection of tasks, specially for dealing with a bunch of images.",
-  "preferGlobal": true,
+  "main" : "index.js",
+  "preferGlobal": "true",
   "bin": {
     "photophlow": "index.js"
   },
