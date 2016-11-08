@@ -2,7 +2,10 @@
   "name": "photophlow",
   "version": "0.1.0",
   "description": "Photography associated collection of tasks, specially for dealing with a bunch of tasks.",
-  "main": "index.js",
+  "preferGlobal": true,
+  "bin": {
+    "photophlow": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
