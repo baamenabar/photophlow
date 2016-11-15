@@ -56,6 +56,23 @@ const Lists = (() => {
 		});
 	};
 
+	let _createFolders = (folderList) => {
+		folderList.forEach( element => {
+			var dirStat = false;
+			try {
+				dirStat = fs.statSync('./' + element);
+			} catch(e) {
+				console.log('"' + element + '" not a file or folder. Creating folder "' + element + '".');
+			}
+			if(!dirStat || !dirStat.isDirectory()) {
+				fs.mkdirSync(element);
+				console.log('Creating folder "' + element + '".');
+			} else {
+				console.log('Folder "' + element + '" already exists, skipping creation.');
+			}
+		});
+	};
+
 /**
  * Returns just the "hay" of the @needels from a "needels+hay haystack" of file paths, using only the basename for comparison.
  * @param  {Array} haystack [list of filepaths]
@@ -133,6 +150,7 @@ const _moveSameBaseNameTo = (parents, children, targetPath, cb) => {
 		listBaseOrphans: _listBaseOrphans,
 		listSameBaseName: _listSameBaseName,
 		moveSameBaseNameTo: _moveSameBaseNameTo,
+		createFolders: _createFolders
 	};
 })();
 

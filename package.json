@@ -1,6 +1,6 @@
 {
   "name": "photophlow",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Photography associated collection of tasks, specially for dealing with a bunch of images.",
   "main": "index.js",
   "preferGlobal": "true",

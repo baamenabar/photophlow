@@ -3,10 +3,11 @@ const glob = require('glob');
 const fs = require('fs');
 
 const Shortcuts = (() => {
-	let formats = ['dng','nef','cr2', 'DNG','NEF','CR2'];
+	const rawFormats = ['dng','nef','cr2', 'DNG','NEF','CR2'];
+	const imagesFormats = rawFormats.concat(['jpg','jpeg','psd','JPG','JPEG','PNG','PSD']);
 
 	const _moveExistingJpgNamesFromRawToHD = () => {
-		formats.forEach((format, index) => {
+		rawFormats.forEach((format, index) => {
 			let currentFormat = './RAW/*.' + format;
 			if(glob.sync(currentFormat).length) {
 				lists.moveSameBaseNameTo('./@(*.jpg|*.JPG)', currentFormat, './HD', () => {
@@ -18,30 +19,9 @@ const Shortcuts = (() => {
 		});
 	};
 
-	const _setupBasicFolderStructure = () => {
-		var rawStat = false;
-		var hdStat = false;
-		try {
-			rawStat = fs.statSync('./RAW');
-		} catch(e) {
-			console.log('RAW not a file or folder. Creating folder RAW.');
-		}
-		if(!rawStat || !rawStat.isDirectory()) {
-			fs.mkdirSync('RAW');
-		}
-		try {
-			hdStat = fs.statSync('./HD');
-		} catch(e) {
-			console.log('HD not a file or folder. Creating folder HD.');
-		}
-		if(!hdStat || !hdStat.isDirectory()) {
-			fs.mkdirSync('HD');
-		}
-	};
-
 	const _moveRawToRawFolder = () => {
-		_setupBasicFolderStructure();
-		let globPattern = '@(*.' + formats.join('|*.') + ')';
+		lists.createFolders(['RAW','HD']);
+		let globPattern = '@(*.' + rawFormats.join('|*.') + ')';
 		//console.log('globPattern:', globPattern);
 		glob(globPattern, {nocase:true}, (err, fileList) => {
 				if (err) {
@@ -53,9 +33,24 @@ const Shortcuts = (() => {
 		);
 	};
 
+	const _initLightRoom = () => {
+		lists.createFolders(['sources','to_process','exports']);
+		let globPattern = '@(*.' + imagesFormats.join('|*.') + ')';
+		//console.log('globPattern:', globPattern);
+		glob(globPattern, {nocase:true}, (err, fileList) => {
+				if (err) {
+					console.error('A glob error', err)
+					return;
+				}
+				lists.moveListOfFiles(fileList, './sources',() => {console.log('Done moving source files.')});
+			}
+		);
+	};
+
 	return {
 		cleanRaw :    _moveExistingJpgNamesFromRawToHD,
-		separateRaw : _moveRawToRawFolder
+		separateRaw : _moveRawToRawFolder,
+		initLightRoom: _initLightRoom
 	};
 
 })();

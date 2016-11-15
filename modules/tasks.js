@@ -50,6 +50,11 @@ var Tasks = (() => {
 			description: 
 			        '   Creates HD and RAW folders and moves RAW files inside',
 		},
+		initlr: {
+			fn:shortcuts.initLightRoom,
+			description:
+			   '        Initializes a folder to becoma a lightroom workspace, createing folders and moving files into "source" folder',
+		},
 	};
 
 	return {
